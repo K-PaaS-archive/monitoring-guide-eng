@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Server
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Server
 
 
 # Zabbix Server Install Guide
@@ -236,7 +236,7 @@ PaaS-TA 플랫폼에서 IaaS 모니터링을 위해 필수 설정되어야 할 *
 
 
 ### 3.3. Create proxy(프록시 설정)
-Zabbix Proxy가 설치된 노드(인스턴스) 정보를 Zabbix Server 프론트엔드를 통해 등록하는 방법에 대해 알아본다. 이 단계를 진행하기 위해서는 Zabbix Proxy가 필요하므로 먼저 [Zabbix Proxy 설치](https://github.com/PaaS-TA/monitoring-guide/blob/master/install/PAAS-TA_MONITORING_ZABBIX-PROXY_INSTALL.md)를 마친 후 다시 본 가이드로 돌아와 해당 단계를 이어서 수행한다.
+Zabbix Proxy가 설치된 노드(인스턴스) 정보를 Zabbix Server 프론트엔드를 통해 등록하는 방법에 대해 알아본다. 이 단계를 진행하기 위해서는 Zabbix Proxy가 필요하므로 먼저 [Zabbix Proxy 설치](https://github.com/PaaS-TA/monitoring-guide-eng/blob/master/install/PAAS-TA_MONITORING_ZABBIX-PROXY_INSTALL.md)를 마친 후 다시 본 가이드로 돌아와 해당 단계를 이어서 수행한다.
  
 **Administration > Proxies** 메뉴로 이동해 우측 상단의 'Create proxy' 버튼을 통해 프록시 설정이 가능하다. Zabbix Proxy를 설치할 때 설정된 환경설정 값(`zabbix-proxy.conf` 파일 참고)을 바탕으로 각 사용자 설정에 알맞게 Proxy 정보를 입력한 후 설정을 완료한다.
 
@@ -255,4 +255,4 @@ OpenStack 환경에서는 Proxy 인스턴스에 Floating IP를 할당함으로 �
   </tr>
 </table>
 
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Server
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Server

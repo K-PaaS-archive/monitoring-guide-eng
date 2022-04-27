@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Proxy
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Proxy
 
 
 # Zabbix Proxy Install Guide
@@ -170,4 +170,4 @@ $ sudo systemctl enable zabbix-proxy
 
 Zabbix Proxy 설치가 마무리 되었다면 Zabbix Server 설치 가이드의 **'3.3. Create proxy(프록시 설정)'** 항목으로 돌아가 프록시 설정 단계를 이어서 수행한다.
 
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Proxy
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Proxy

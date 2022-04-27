@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Agent
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Agent
 
 
 # Zabbix Agent Install Guide
@@ -97,4 +97,4 @@ $ sudo systemctl restart zabbix-agent
 여기까지의 **'2.2. Zabbix Agent 설치'** 항목의 설치 가이드를 CP 환경 구성을 위한 모든 쿠버네티스 클러스터 노드(Master 노드 및 모든 Slave 노드)에서 동일하게 반복하여 수행한다.
 
 
-### [Index](https://github.com/PaaS-TA/Guide) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Agent
+### [Index](https://github.com/PaaS-TA/Guide-eng) > [Monitoring Install](PAAS-TA_MONITORING_INSTALL_GUIDE.md) > Zabbix Agent
