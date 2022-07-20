@@ -70,7 +70,7 @@ The Inception server shall be capable of external communication.
 The components to be configured on the Inception server for BOSH and PaaS-TA installation are as follows.
 
 - BOSH CLI 6.1.x and above
-- BOSH Dependency : ruby, ruby-dev, openssl etc.
+- BOSH Dependency : ruby, ruby-dev, openssl, etc.
 - BOSH Deployment: manifest deployment for Bosh Installation  
 - PaaS-TA Deployment : manifest deployment for PaaS-TA Installation
 
@@ -126,8 +126,8 @@ $ sudo mv ./bosh /usr/local/bin/bosh
 $ bosh -v
 ```
 
-The BOSH2 CLI has a function of generating BOSH certificate information when BOSH is installed.  
-Cloud Foundry's default BOSH CLI authentication certificates is limited to one year.  
+The BOSH2 CLI has the function of generating BOSH certificate information when BOSH is installed.  
+Cloud Foundry's default BOSH CLI authentication certificates are limited to one year.  
 The BOSH authentication certificate is a certificate required for communication between the BOSH internal components.  
 If a year after BOSH is installed, the certificate needs to be renewed.  
 certificate renewing guide video - [Link](https://youtu.be/zn8VO-fHAFE?t=1994)
@@ -421,7 +421,7 @@ When the BOSH is installed, {iaas}/creds.yml file is created under the BOSH inst
 Creds.yml has BOSH credential information and logs into BOSH using credits.yml.  
 After logging in to BOSH, PaaS-TA can be installed using the BOSH CLI command.  
 **To deploy VMs using BOSH, you must log in to BOSH.**  
-BOSH Log in command is as follows.  
+BOSH Log-in command is as follows.  
 
 ```
 $ cd ~/workspace/paasta-deployment/bosh
@@ -478,7 +478,7 @@ $ ssh jumpbox@{bosh_url} -i jumpbox.key
 ```
 ubuntu@inception:~/workspace/paasta-deployment/bosh$ ssh jumpbox@10.0.1.6 -i jumpbox.key
 Unauthorized use is strictly prohibited. All access and activity
-is subject to logging and monitoring.
+are subject to logging and monitoring.
 Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-54-generic x86_64)
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
