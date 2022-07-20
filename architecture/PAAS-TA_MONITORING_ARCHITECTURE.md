@@ -5,11 +5,11 @@
 
 
 ### │ Purpose
-본 문서에서는 PaaS-TA 플랫폼에서 동작하는 모니터링 구조(Architecture)에 대한 설명을 다룬다.
+This document covers the description of the monitoring architecture that operates on the PaaS-TA platform.
 
 
 ### │ References
-본 문서는 클라우드 파운드리(Cloud Foundry) 재단에서 제공하는 레퍼런스를 참고하여 작성되었다.
+This document is written by referring to references provided by the Cloud Foundry Foundation.
 
 　🌐 **BOSH Document** ▸ <a href="https://bosh.io">bosh.io</a>  
 　🌐 **CF Document** ▸ <a href="https://docs.cloudfoundry.org">docs.cloudfoundry.org</a>  
