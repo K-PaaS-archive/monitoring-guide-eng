@@ -358,13 +358,13 @@ uaa_client_portal_secret: "clientsecret"         # Secret Variable to access to 
 
 # Monitoring INFO
 metric_url: "10.5.1.101"                         # Monitoring InfluxDB IP
-elasticsearch_master_ip: "10.5.2.101"            # Logsearch의 elasticsearch master IP
-elasticsearch_master_port: 9200                  # Logsearch의 elasticsearch master Port
-syslog_address: "10.5.2.100"                     # Logsearch의 ls-router IP
-syslog_port: "2514"                              # Logsearch의 ls-router Port
+elasticsearch_master_ip: "10.5.2.101"            # elasticsearch master IP of Logsearch
+elasticsearch_master_port: 9200                  # elasticsearch master Port of Logsearch
+syslog_address: "10.5.2.100"                     # ls-router IP of Logsearch
+syslog_port: "2514"                              # ls-router Port of Logsearch
 syslog_transport: "relp"                         # Logsearch Protocol
-saas_monitoring_url: "10.5.1.122"                # Pinpoint HAProxy WEBUI의 Public IP
-monitoring_api_url: "10.5.1.121"                 # Monitoring-WEB의 Public IP
+saas_monitoring_url: "10.5.1.122"                # Public IP of Pinpoint HAProxy WEBUI
+monitoring_api_url: "10.5.1.121"                 # Public IP of Monitoring-WEB
 
 ...
 
