@@ -36,11 +36,11 @@ This guide is based on the following installation environment, so there may be s
 ### 2.1. Zabbix Agent installation according to the service platform
 **│ Application Platform (AP)**  
 
-In an AP environment, the Zabbix Agent is designed to be installed with each instance that configures the PaaS-TA environment at the same time as the PaaS-TA platform deployment. It is not necessary to install the Zabbix Agent separately in the AP environment, but only Zabbix Server or Zabbix Proxy IP information needs to be properly set in the common variable reference file(`common-vars.yml`)used when installing PaaS-TA..
+In an AP environment, the Zabbix Agent is designed to be installed with each instance that configures the PaaS-TA environment simultaneously with the PaaS-TA platform deployment. It is not necessary to install the Zabbix Agent separately in the AP environment, but only Zabbix Server or Zabbix Proxy IP information needs to be properly set in the common variable reference file(`common-vars.yml`)used when installing PaaS-TA.
 
 **│ Container Platform (CP)**  
 
-Unlike the way the platform was deployed using deployment automation scripts in the AP environment, the CP environment uses Kubernetes to determine the number of nodes to implement clustering or to create virtual machines on the IaaS platform. Therefore, it is necessary to install the Zabbix Agent separately on each node constituting the CP environment.
+Unlike how the platform was deployed using deployment automation scripts in the AP environment, the CP environment uses Kubernetes to determine the number of nodes to implement clustering or create virtual machines on the IaaS platform. Therefore, installing the Zabbix Agent separately on each node constituting the CP environment is necessary.
 
 Visit the Zabbix official website to download the Zabbix Version, Operating System, and Type Version and receive an installation script suitable for your operating environment through the  [Download](https://www.zabbix.com/download) page.
 
@@ -86,7 +86,7 @@ HostMetadata=paasta
 > **[ Necessary Setup Parameter ]**  
 . `Server`: Enter the IP address of the Zabbix Server. Enter the IP address of the proxy in the Zabbix Proxy configuration environment.  
 . `ServerActive`: Enter the IP address of the Zabbix Server (or Proxy) and the service port number in a colon.  
-. `Hostname`: Enter the host name. The value set here applies to the monitoring hostname of the Zabbix Server.  
+. `Hostname`: Enter the hostname. The value set here applies to the monitoring hostname of the Zabbix Server.  
 . `HostMetadata`: A sort of tag-like role for distinguishing between instance ranges for auto-monitoring host registration and grouping.
 
 Restart Zabbix Agent and complete the Agent Installation and Settings.
