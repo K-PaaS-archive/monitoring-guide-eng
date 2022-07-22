@@ -33,7 +33,7 @@ This guide is based on the following installation environment, so there may be s
 ## <div id="2">2. Installation of Zabbix Agent
 
 
-### 2.1. 서Zabbix Agent installation according to the service platform
+### 2.1. Zabbix Agent installation according to the service platform
 **│ Application Platform (AP)**  
 
 In an AP environment, the Zabbix Agent is designed to be installed with each instance that configures the PaaS-TA environment at the same time as the PaaS-TA platform deployment. It is not necessary to install the Zabbix Agent separately in the AP environment, but only Zabbix Server or Zabbix Proxy IP information needs to be properly set in the common variable reference file(`common-vars.yml`)used when installing PaaS-TA..
