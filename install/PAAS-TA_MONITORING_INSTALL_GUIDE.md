@@ -23,7 +23,7 @@
 - [**[PaaS] Log Monitoring** - Logsearch Installation](PAAS-TA_MONITORING_LOGSEARCH_INSTALL.md)
 
 + [**[SaaS] Application Monitoring** - Pinpoint Monitoring Installation](PAAS-TA_MONITORING_PINPOINT_MONITORING_INSTALL.md)
-  + [Create and Registering Pinpoint Java Buildpack](PAAS-TA_MONITORING_PINPOINT_JAVA_BUILDPACK_CREATING_AND_UPLOADING.md)
+  + [Creating and Registering Pinpoint Java Buildpack](PAAS-TA_MONITORING_PINPOINT_JAVA_BUILDPACK_CREATING_AND_UPLOADING.md)
   + [Push and Bind Application & Pinpoint Service](PAAS-TA_MONITORING_PINPOINT_APPLICATION_PUSHING_AND_BINDING.md)
 
 - [**[CaaS] Container Monitoring** - Prometheus Installation](PAAS-TA_MONITORING_CONTAINER_SERVICE_INSTALL.md)
