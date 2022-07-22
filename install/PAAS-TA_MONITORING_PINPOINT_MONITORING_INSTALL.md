@@ -2,48 +2,48 @@
 
 
 # Pinpoint Monitoring Install Guide
-1\. [문서 개요](#1)  
-　● [목적](#11)  
-　● [범위](#12)  
-　● [시스템 구성도](#13)  
-　● [참고자료](#14)  
-2\. [Pinpoint 서비스팩 설치](#2)  
+1\. [Document Outline](#1)  
+　● [Purpose](#11)  
+　● [Range](#12)  
+　● [System Configuration Diagram](#13)  
+　● [References](#14)  
+2\. [Pinpoint Servicepack Installation](#2)  
 　2.1 [Prerequisite](#21)  
-　2.2 [설치 파일 다운로드](#22)  
-　2.3 [Pinpoint Monitoring 설치 환경설정](#23)  
+　2.2 [Download Installation File](#22)  
+　2.3 [Pinpoint Monitoring Installation Configuration Settings](#23)  
 　　● [common_vars.yml](#231)  
 　　● [pinpoint-vars.yml](#232)  
 　　● [deploy-pinpoint.sh](#233)  
 　　● [deploy-pinpoint-vsphere.sh](#234)  
-　2.4. [Pinpoint Monitoring 설치](#24)  
-　2.5. [서비스 설치 확인](#25)  
-　2.6. [Security-Group 등록](#26)  
-　2.7. [Pinpoint User-Provided Service 등록](#27)  
-3\. [Sample Web App 연동 Pinpoint 연동](#3)  
-　● [Sample Web App 구조](#31)  
-　● [Sample Web App에 서비스 바인드 신청 및 App 확인](#32)  
+　2.4. [Pinpoint Monitoring Installation](#24)  
+　2.5. [Check Service Installation](#25)  
+　2.6. [Security-Group Registration](#26)  
+　2.7. [Pinpoint User-Provided Service Registration](#27)  
+3\. [Sample Web App Interwork Pinpoint Interwork](#3)  
+　● [Sample Web App Configuration](#31)  
+　● [Apply for Service Bind and App Check at the Sample Web App](#32)  
 
-# <div id='1'> 1. 문서 개요
-## <div id='11'> ● 목적
+# <div id='1'> 1. Document Outline
+## <div id='11'> ● Purpose
 
-본 문서(SaaS Monitoring Pinpoint 서비스팩 설치 가이드)는 전자정부표준프레임워크 기반의 PaaS-TA에서 제공되는 서비스팩인 Pinpoint 서비스팩을 BOSH 2.0을 이용하여 설치 하는 방법과 PaaS-TA의 SaaS 형태로 제공하는 Application 에서 Pinpoint 서비스를 사용하는 방법을 기술하였다.  
-PaaS-TA 3.5 버전부터는 BOSH 2.0 기반으로 deploy를 진행하며 기존 BOSH 1.0 기반으로 설치를 원할경우에는 PaaS-TA 3.1 이하 버전의 문서를 참고한다.
+This document (SaaS Monitoring Pinpoint Service Pack Installation Guide) describes how to install the Pinpoint service pack, a service pack provided by PaaS-TA based on the e-government standard framework, using BOSH 2.0, and how to use the Pinpoint service in an application that provides PaaS-TA as a SaaS.  
+Starting with PaaS-TA 3.5 version, deploys are based on BOSH 2.0, and if you want to install based on existing BOSH 1.0, refer to the documentation of PaaS-TA 3.1 or lower.
 
-## <div id='12'> ● 범위
-설치 범위는 Pinpoint 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
+## <div id='12'> ● Range
+The installation range was created based on the basic installation to verify the Pinpoint service pack.
 
-## <div id='13'> ● 시스템 구성도
+## <div id='13'> ● System Configuration Diagram
 
-본 문서의 설치된 시스템 구성도이다.  
-Pinpoint Server, HBase의 HBase Master, Collector , WebUI2로 최소사항을 구성하였다. 
+It is the installed system configuration diagram of this document.  
+Minimum was configured using the Pinpoint Server, HBase의 HBase Master, Collector , and WebUI2. 
 
 ![](images/pinpoint-image1.png)
 
 <table>
   <tr>
-    <th>구분</th>
+    <th>Classification</th>
     <th>Resource Pool</th>
-    <th>스펙</th>
+    <th>Spec</th>
   </tr>
   <tr>
   <td>collector      </td><td>pinpoint_medium</td><td>2vCPU / 2GB RAM / 8GB Disk</td>
@@ -58,33 +58,33 @@ Pinpoint Server, HBase의 HBase Master, Collector , WebUI2로 최소사항을 �
   </tr>
 </table>
 
-## <div id='14'> ● 참고자료
+## <div id='14'> ● References
 [**http://bosh.io/docs**](http://bosh.io/docs)  
 [**http://docs.cloudfoundry.org/**](http://docs.cloudfoundry.org/)
 
-## <div id='2'> 2. Pinpoint 서비스팩 설치
+## <div id='2'> 2. Pinpoint Servicepack Installation
 
 ### <div id='21'> 2.1. Prerequisite
 
-1. BOSH 설치가 되어있으며, BOSH Login이 되어 있어야 한다.
-2. cloud-config와 runtime-config가 업데이트 되어있는지 확인한다.
-3. Stemcell 목록을 확인하여 서비스 설치에 필요한 Stemcell(ubuntu bionic 1.34)이 업로드 되어 있는 것을 확인한다.
+1. BOSH should be installed and BOSH Login should be done.
+2. Check if the cloud-config and runtime-config are updated.
+3. Check the Stemcell list to make sure that the Stemcell (ubuntubionic 1.34) required for service installation is uploaded.
 
 
-> cloud-config 확인  
+> Check cloud-config   
 > $ bosh -e {director-name} cloud-config  
 
-> runtime-config 확인  
+> Check runtime-config   
 > $ bosh -e {director-name} runtime-config  
 
-> stemcell 확인  
+> Check stemcell   
 > $ bosh -e {director-name} stemcells  
 
 
 
-## <div id='22'/>2.2.  설치 파일 다운로드
+## <div id='22'/>2.2.  Download Installation File
 
-- PaaS-TA를 설치하기 위한 deployment가 존재하지 않는다면 다운로드 받는다
+- Download if the deployment for PaaS-TA installation does not exist
 ```
 $ cd ${HOME}/workspace
 $ git clone https://github.com/paas-ta/common.git 
@@ -93,58 +93,58 @@ $ git clone https://github.com/paas-ta/monitoring-deployment.git
 
 
 
-## <div id='23'> 2.3. Pinpoint Monitoring 설치 환경설정
+## <div id='23'> 2.3. Pinpoint Monitoring Installation Configuration Setting
 
-${HOME}/workspace/monitoring-deployment/pinpoint-monitoring 이하 디렉터리에는 Pinpoint Monitoring 설치를 위한 Shell Script 파일이 존재한다.
+$ Uner the {HOME}/workspace/monitoring-deployment/pinpoint-monitoring directory, there is a Shell Script file for Pinpoint Monitoring Installation.
 	
 ### <div id='231'/>● common_vars.yml
-common 폴더에 있는 common_vars.yml PaaS-TA 및 각종 Service 설치시 적용하는 공통 변수 설정 파일이 존재한다.  
-Pinpoint-Monitoring을 설치할 때는 saas_monitoring_url 값을 변경 하여 설치 할 수 있다.  
+The common_vars.yml in the common folder contains a common variable setting file that is applied when installing PaaS-TA and various services.  
+When installing Pinpoint-Monitoring, you can install it by changing the saas_monitoring_url value.  
 
 ```
 # BOSH INFO
 bosh_ip: "10.0.1.6"				# BOSH IP
 bosh_url: "https://10.0.1.6"				# BOSH URL (e.g. "https://00.000.0.0")
 bosh_client_admin_id: "admin"			# BOSH Client Admin ID
-bosh_client_admin_secret: "giej8ett7mqsho9tx7s3"	# BOSH Client Admin Secret('echo $(bosh int ~/workspace/paasta-5.0/deployment/paasta-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
+bosh_client_admin_secret: "giej8ett7mqsho9tx7s3"	# BOSH Client Admin Secret(can be checked with 'echo $(bosh int ~/workspace/paasta-5.0/deployment/paasta-deployment/bosh/{iaas}/creds.yml --path /admin_password)' command)
 bosh_director_port: 25555			# BOSH director port
 bosh_oauth_port: 8443				# BOSH oauth port
-bosh_version: 271.2				# BOSH version('bosh env' 명령어를 통해 확인 가능, on-demand service용, e.g. "271.2")
+bosh_version: 271.2				# BOSH version(can be checked with 'bosh env' command, for on-demand service, e.g. "271.2")
 
 # PAAS-TA INFO
-system_domain: "10.0.1.80.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
+system_domain: "10.0.1.80.nip.io"		# Domain (When using nip.io, it is the same with the HAProxy Public IP)
 paasta_admin_username: "admin"			# PaaS-TA Admin Username
 paasta_admin_password: "admin"			# PaaS-TA Admin Password
 paasta_nats_ip: "10.0.1.121"
 paasta_nats_port: 4222
 paasta_nats_user: "nats"
-paasta_nats_password: "7EZB5ZkMLMqT73h2JtxPv1fvh3UsqO"	# PaaS-TA Nats Password (CredHub 로그인후 'credhub get -n /micro-bosh/paasta/nats_password' 명령어를 통해 확인 가능)
-paasta_nats_private_networks_name: "default"	# PaaS-TA Nats 의 Network 이름
+paasta_nats_password: "7EZB5ZkMLMqT73h2JtxPv1fvh3UsqO"	# PaaS-TA Nats Password (can be checked with 'credhub get -n /micro-bosh/paasta/nats_password' command after CredHub Login)
+paasta_nats_private_networks_name: "default"	# Network Name of PaaS-TA Nats
 paasta_database_ips: "10.0.1.123"		# PaaS-TA Database IP (e.g. "10.0.1.123")
 paasta_database_port: 5524			# PaaS-TA Database Port (e.g. 5524(postgresql)/13307(mysql)) -- Do Not Use "3306"&"13306" in mysql
 paasta_database_type: "postgresql"                      # PaaS-TA Database Type (e.g. "postgresql" or "mysql")
 paasta_database_driver_class: "org.postgresql.Driver"   # PaaS-TA Database driver-class (e.g. "org.postgresql.Driver" or "com.mysql.jdbc.Driver")
 paasta_cc_db_id: "cloud_controller"		# CCDB ID (e.g. "cloud_controller")
-paasta_cc_db_password: "cc_admin"		# CCDB Password (e.g. "c418e687c4Kx!" 영어/숫자/특수문자 혼용 8자리 이상)
+paasta_cc_db_password: "cc_admin"		# CCDB Password (e.g. "c418e687c4Kx!" 8+ digits mixed with English/numeric/special characters)
 paasta_uaa_db_id: "uaa"				# UAADB ID (e.g. "uaa")
-paasta_uaa_db_password: "uaa_admin"		# UAADB Password (e.g. "ifb2497iEA5!" 영어/숫자/특수문자 혼용 8자리 이상)
+paasta_uaa_db_password: "uaa_admin"		# UAADB Password (e.g. "ifb2497iEA5!" 8+ digits mixed with English/numeric/special characters)
 paasta_api_version: "v3"
 
 # UAAC INFO
 uaa_client_admin_id: "admin"			# UAAC Admin Client Admin ID
-uaa_client_admin_secret: "admin-secret"		# UAAC Admin Client에 접근하기 위한 Secret 변수
-uaa_client_portal_secret: "clientsecret"	# UAAC Portal Client에 접근하기 위한 Secret 변수
+uaa_client_admin_secret: "admin-secret"		# Secret Variable to access to UAAC Admin Client
+uaa_client_portal_secret: "clientsecret"	# Secret Variable to access to UAAC Portal Client
 
 # Monitoring INFO
 metric_url: "10.0.1.101"			# Monitoring InfluxDB IP
-elasticsearch_master_ip: "10.0.1.105"           # Logsearch의 elasticsearch master IP
-elasticsearch_master_port: 9200                 # Logsearch의 elasticsearch master Port
-index_retention_period: "10"                    # Logsearch의 logstash index 보유 기간(Days)
-syslog_address: "10.0.1.100"            	# Logsearch의 ls-router IP
-syslog_port: "2514"                          	# Logsearch의 ls-router Port
+elasticsearch_master_ip: "10.0.1.105"           # elasticsearch master IP of Logsearch
+elasticsearch_master_port: 9200                 # elasticsearch master Port of Logsearch
+index_retention_period: "10"                    # logstash index retention period(Days) of Logsearch
+syslog_address: "10.0.1.100"            	# ls-router IP of Logsearch
+syslog_port: "2514"                          	# ls-router Port of Logsearch
 syslog_transport: "relp"                        # Logsearch Protocol
-saas_monitoring_url: "61.252.53.248"	   	# Pinpoint HAProxy WEBUI의 Public IP
-monitoring_api_url: "61.252.53.241"        	# Monitoring-WEB의 Public IP
+saas_monitoring_url: "61.252.53.248"	   	# Public IP of Pinpoint HAProxy WEBUI
+monitoring_api_url: "61.252.53.241"        	# Public IP of Monitoring-WEB
 
 ### Portal INFO
 portal_web_user_ip: "52.78.88.252"
@@ -163,7 +163,7 @@ host_metadata: "paasta"                # Metadata for Zabbix Agent autoregistrat
 
 ### <div id='232'>● pinpoint-vars.yml
 	
-모니터링 하려는 VM에 접근을 하기 위해 PemSSH의 값을 true로 한다면 BOSH를 설치할때 IaaS의 VM을 만들 수 있는 권한을 주었던 Key를 같은 폴더에 있는 pem.yml에 같은 형식으로 복사하여야 한다.
+If the value of PemSSH is set to true to access the VM you want to monitor, you must copy the key that permitted you to create the VM in IaaS in the same folder to pem.yml in the same format.
 
 ```
 ### On-Demand Bosh Deployment Name Setting ###
@@ -178,35 +178,35 @@ stemcell_alias: "default"                               # Main Stemcell Alias
 ### On-Demand Release Deployment Setting ###
 releases_name:  "paasta-pinpoint-monitoring-release"    # On-Demand Release Name
 public_networks_name: "vip"                             # Pinpoint Public Network Name
-PemSSH: "true"                                          # h_master에서 모니터링 하려는 VM에 SSH접근시 사용하는 Key File 지정 여부(default:false)
+PemSSH: "true"                                          # Whether the h_master specifies the Key File to use for SSH access to the VM it is monitoring(default:false)
 
 # H-Master
-h_master_azs: ["z1"]                                    # H-Master 가용 존
-h_master_instances: 1                                   # H-Master 인스턴스 수
-h_master_vm_type: "small-highmem-16GB"                  # H-Master VM 종류
-h_master_network: "default"                             # H-Master 네트워크
-h_master_persistent_disk_type: "30GB"                   # H-Master 영구 Disk 종류
+h_master_azs: ["z1"]                                    # H-Master Available Zone
+h_master_instances: 1                                   # H-Master Instance Number
+h_master_vm_type: "small-highmem-16GB"                  # H-Master VM Type
+h_master_network: "default"                             # H-Master Network
+h_master_persistent_disk_type: "30GB"                   # H-Master Permanent Disk Type
 
 # COLLECTOR
-collector_azs: ["z1"]                                   # Collector 가용 존
-collector_instances: 1                                  # Collector 인스턴스 수
-collector_vm_type: "small-highmem-16GB"                 # Collector VM 종류
-collector_network: "default"                            # Collector 네트워크
-collector_persistent_disk_type: "30GB"                  # Collector 영구 Disk 종류
+collector_azs: ["z1"]                                   # Collector Available Zone
+collector_instances: 1                                  # Collector Instance Number
+collector_vm_type: "small-highmem-16GB"                 # Collector VM Type
+collector_network: "default"                            # Collector Network
+collector_persistent_disk_type: "30GB"                  # Collector Permanent Disk Type
 
 # PINPOINT
-pinpoint_web_azs: ["z1"]                                # Pinpoint 가용 존
-pinpoint_web_instances: 1                               # Pinpoint 인스턴스 수
-pinpoint_web_vm_type: "small-highmem-16GB"              # Pinpoint VM 종류
-pinpoint_web_network: "default"                         # Pinpoint 네트워크
-pinpoint_web_persistent_disk_type: "30GB"               # Pinpoint 영구 Disk 종류
+pinpoint_web_azs: ["z1"]                                # Pinpoint Available Zone
+pinpoint_web_instances: 1                               # Pinpoint Instance Number
+pinpoint_web_vm_type: "small-highmem-16GB"              # Pinpoint VM Type
+pinpoint_web_network: "default"                         # Pinpoint Network
+pinpoint_web_persistent_disk_type: "30GB"               # Pinpoint Permanent Disk Type
 
 # HAPROXY
-haproxy_webui_azs: ["z1"]                               # HAProxy 가용 존
-haproxy_webui_instances: 1                              # HAProxy 인스턴스 수
-haproxy_webui_vm_type: "small-highmem-16GB"             # HAProxy VM 종류
-haproxy_webui_network: "default"                        # HAProxy 네트워크
-haproxy_webui_persistent_disk_type: "30GB"              # HAProxy 영구 Disk 종류
+haproxy_webui_azs: ["z1"]                               # HAProxy Available Zone
+haproxy_webui_instances: 1                              # HAProxy Instance Number
+haproxy_webui_vm_type: "small-highmem-16GB"             # HAProxy VM Type
+haproxy_webui_network: "default"                        # HAProxy Network
+haproxy_webui_persistent_disk_type: "30GB"              # HAProxy Permanent Disk Type
 ```
 
 ### <div id='233'>● deploy-pinpoint.sh
@@ -228,9 +228,9 @@ echo 'y' | bosh -e micro-bosh -d pinpoint-monitoring deploy paasta-pinpoint.yml 
 	-l pem.yml
 ```
 
-## <div id='24'> 2.4. Pinpoint Monitoring 설치
+## <div id='24'> 2.4. Pinpoint Monitoring Installation
 	
-- 서버 환경에 맞추어 Deploy 스크립트 파일의 설정을 수정한다. 
+- Modify the settings in the Deploy script file to suit the server environment. 
 
 > $ vi ${HOME}/workspace/monitoring-deployment/pinpoint-monitoring/deploy-pinpoint.sh
 
@@ -243,15 +243,15 @@ echo 'y' | bosh -e micro-bosh -d pinpoint-monitoring deploy paasta-pinpoint.yml 
 	-l pem.yml
 ```
 
-- Pinpoint Monitoring 설치 Shell Script 파일 실행 (BOSH 로그인 필요)
+- Execute Pinpoint Monitoring Installation Shell Script File (BOSH Login Required)
 
 ```
 $ cd ~/workspace/monitoring-deployment/paasta-monitoring
 $ sh deploy-pinpoint.sh
 ```
 
-## <div id='25'/>2.5. 서비스 설치 확인
-Pinpoint Monitoring이 설치 완료 되었음을 확인한다.
+## <div id='25'/>2.5. Service Installation Check
+Verify if the Pinpoint Monitoring installation is completed.
 ```
 $ bosh –e {director_name} vms
 
