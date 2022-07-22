@@ -58,7 +58,7 @@ Install Red Hat software collection for installation of Zabbix Frontend.
 # yum -y install centos-release-scl
 ```
 
-Edit the file `/etc/yum.repos.d/zabbix.repo` to activate the Zabbix front-end repository as follows: 
+Modify the `/etc/yum.repos.d/zabbix.repo` file to activate the Zabbix front-end repository. 
 ```
 ...
 
