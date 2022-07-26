@@ -3,59 +3,59 @@
 
 # Prometheus Install Guide
 
-1. [문서개요](#1)  
-2. [PaaS-TA Container Monitoring 설치](#2)  
-3. [PaaS-TA Container Monitoring 설치 확인](#3)  
-4. [Prometheus 정보 확인](#4)  
-5. [Grafana 정보 확인](#5)  
+1. [Document Outline](#1)  
+2. [PaaS-TA Container Monitoring Installation](#2)  
+3. [PaaS-TA Container Monitoring Installation Check](#3)  
+4. [Prometheus Information Check](#4)  
+5. [Grafana Information Check](#5)  
  
-## <div id='1'/>1. 문서 개요
-본 문서(PaaS-TA-CaaS-Monitoring)는 설치된 CaaS에서 Container Usage 수집하여 paasta-monitoring에 나타내기 위한 설치 방법을 기술하였다.
+## <div id='1'/>1. Document Outline
+This document (PaaS-TA-CaaS-Monitoring) describes the installation method for collecting Container Usage from installed CaaS and presenting it to Paasta-monitoring.
 
-### <div id='1.1'/>1.1 목적
-본 문서는 CaaS에서 Container Usage를 수집하고 paasta-monitoring으로 나타내는데 그 목적이 있다.
+### <div id='1.1'/>1.1 Purpose
+The purpose of this document is to collect Container Usage from CaaS and represent it as Paasta-monitoring.
   
-### <div id='1.2'/>1.2 범위
-본 문서는 paas-ta-container-platform의 master를 기준으로 CaaS 배포의 Kubespray 및 CaaS를 설치하는 것을 기준으로 작성되었다.      
+### <div id='1.2'/>1.2 Range
+This document is based on the installation of Kubespray and CaaS for CaaS deployments based on the master of paas-ta-container-platform.      
 
-## <div id='2'/>2.	CaaS 모니터링 설치
+## <div id='2'/>2.	CaaS Monitoring Installation
 
 ### <div id='2.1'/>2.1 Prerequisite
-본 설치 가이드는 Ubuntu환경에서 설치하는 것을 기준으로 작성하였다. 서비스 설치를 위해서는 BOSH 2.0과 PaaS-TA 5.5, PaaS-TA 포털 API, PaaS-TA 포털 UI, Kubespray 설치, CaaS 배포가 설치 되어 있어야 한다.
-- [BOSH 2.0 설치 가이드](https://github.com/PaaS-TA/Guide/blob/master/install-guide/bosh/PAAS-TA_BOSH2_INSTALL_GUIDE_V5.0.md)
-- [PaaS-TA 5.5 설치 가이드](https://github.com/PaaS-TA/Guide/blob/master/install-guide/paasta/PAAS-TA_CORE_INSTALL_GUIDE_V5.0.md)
-- [PaaS-TA 포털 API 설치 가이드](https://github.com/PaaS-TA/Guide/blob/master/install-guide/portal/PAAS-TA_PORTAL_API_SERVICE_INSTALL_GUIDE_V1.0.md)
-- [PaaS-TA 포털 UI 설치 가이드](https://github.com/PaaS-TA/Guide/blob/master/install-guide/portal/PAAS-TA_PORTAL_UI_SERVICE_INSTALL_GUIDE_V1.0.md)
-- [Kubespray 설치 가이드](https://github.com/PaaS-TA/paas-ta-container-platform/blob/master/install-guide/standalone/paas-ta-container-platform-standalone-deployment-guide-v1.0.md)
-- [CaaS 배포 설치 가이드](https://github.com/PaaS-TA/paas-ta-container-platform/blob/master/install-guide/bosh/paas-ta-container-platform-bosh-deployment-caas-guide-v1.0.md)
+This installation guide is based on installation in the Ubuntu environment. For service installation, BOSH 2.0, PaaS-TA 5.5, PaaS-TA Portal API, PaaS-TA Portal UI, Kubespray Installation, CaaS Deployment must be installaed.
+- [BOSH 2.0 Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/bosh/PAAS-TA_BOSH2_INSTALL_GUIDE_V5.0.md)
+- [PaaS-TA 5.5 Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/paasta/PAAS-TA_CORE_INSTALL_GUIDE_V5.0.md)
+- [PaaS-TA Portal API Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/portal/PAAS-TA_PORTAL_API_SERVICE_INSTALL_GUIDE_V1.0.md)
+- [PaaS-TA Portal UI Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/portal/PAAS-TA_PORTAL_UI_SERVICE_INSTALL_GUIDE_V1.0.md)
+- [Kubespray Installation Guide](https://github.com/PaaS-TA/paas-ta-container-platform/blob/master/install-guide/standalone/paas-ta-container-platform-standalone-deployment-guide-v1.0.md)
+- [CaaS Deployment Installation Guide](https://github.com/PaaS-TA/paas-ta-container-platform/blob/master/install-guide/bosh/paas-ta-container-platform-bosh-deployment-caas-guide-v1.0.md)
 
-### <div id='2.2'/>2.2 Helm 설치  (v3)
-> Helm 다운로드 및 실행 
+### <div id='2.2'/>2.2 Helm Installation  (v3)
+> Download and Execution Helm
 ```
-#  Helm 다운로드
+#  Helm Download
 $  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 
-#  Helm 파일 권한 수정
+#  Helm File Aiuthority Modification
 $  chmod 700 get_helm.sh
 
-#  Helm 실행
+#  Execute Helm
 $  ./get_helm.sh
 ```
 
-> Helm 설치 및 버전 확인
+> Install Helm and Check Version
 ```
 $  helm version
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/ubuntu/.kube/config
 version.BuildInfo{Version:"v3.7.1", GitCommit:"1d11fcb5d3f3bf00dbe6fe31b8412839a96b3dc4", GitTreeState:"clean", GoVersion:"go1.16.9"}
 ```
 
-> Helm Repository 추가 및 적용 
+> Add and Apply Helm Repository 
 ```
 $  helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 $  helm repo update
 ```
 
-> Helm에 등록한 Repo에 대한 세부 정보 확인 
+> Check details of Repo registered with Helm
 ```
 $  helm search repo prometheus
 
@@ -87,26 +87,26 @@ prometheus-community/prometheus-to-sd               0.4.0           0.5.2       
 prometheus-community/alertmanager                   0.8.0           v0.21.0         The Alertmanager handles alerts sent by client ...
 ```
 
-> Kubernetes namespace 생성 및 확인
+> Create and check Kubernetes namespace
 ```
-#  Kubernetes namespace 생성 
+#  Create Kubernetes namespace 
 $  kubectl create namespace paas-ta-container-monitoring
 
-#  Kubernetes namespace 확인
+#  Check Kubernetes namespace 
 $  kubectl get namespace
 ```
 
-> Kubernetes default namespace 변경 (paas-ta-contianer-monitoring을 위한 네임스페이스를 설정한다.)  
+> Change Kubernetes default namespace (Set Namespace for paas-ta-contianer-monitoring.)  
 ```
-#  Kubernetes namespace 변경 
+#  Change Kubernetes namespace  
 $  kubectl config set-context --current --namespace=paas-ta-container-monitoring
 ```
 
-> Helm을 이용한 Prometheus 설치    
+> Installation of Prometheus using Helm    
 ```
 $  helm install prometheus-community/kube-prometheus-stack --generate-name
 
-#  설치가 완료되면 아래와 같은 메세지가 출력된다.
+#  Message shown below will appear if the installation is completed.
 NAME: kube-prometheus-stack-1616563003
 LAST DEPLOYED: Wed Mar 24 05:16:51 2021
 NAMESPACE: default
@@ -118,7 +118,7 @@ kubectl --namespace default get pods -l "release=kube-prometheus-stack-161656300
 Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
 ```
 
-> 배포 상태 확인    
+> Check Deployment Status    
 ```
 $  kubectl get deploy,po,svc
 
@@ -148,7 +148,7 @@ service/kube-prometheus-stack-1617006674-prometheus-node-exporter   ClusterIP   
 service/prometheus-operated                                         ClusterIP   None            <none>        9090/TCP                     20m
 ```
 
-> Prometheus ClusterIP 타입을 NodePort 타입으로 변경 (Port 30060)    
+> Change the Prometheus ClusterIP Type to NodePort Type (Port 30060)    
 ```
 $  kubectl edit svc kube-prometheus-stack-1617-prometheus
 -----------------------------before-----------------------------------
@@ -295,7 +295,7 @@ status:
 
 ```
 
-> Grafana의 ClusterIP 타입을 NodePort 타입으로 변경 (Port 30061)    
+> Change ClusterIP Type of Grafana to NodePort Type (Port 30061)    
 ```
 $  kubectl edit svc kube-prometheus-stack-1617006674-grafana
 -----------------------------before-----------------------------------
@@ -460,28 +460,28 @@ status:
   loadBalancer: {}
 ```
 
->  Kubernetes 기본 namespace 변경 
+>  Change Kubernetes default namespace  
 ```
 $  kubectl config set-context --current --namespace=""
 ```
 
 
-## <div id='3'/>3.	PaaS-TA Container Monitoring 설치 확인
+## <div id='3'/>3.	PaaS-TA Container Monitoring Installation Check
 
->  Monitoring-Web에 접속하여 CaaS 메뉴를 클릭하여 확인한다.
+>  Check by accessing to the Monitoring-Web and click CaaS Menu.
  
 ![paasta_container_monitoring]
 
 
-## <div id='4'/>4.	Prometheus 정보 확인 
+## <div id='4'/>4.	Prometheus Information Check 
 
->  Kubernetes Master IP와 Prometheus의 외부 포트를 통해 접속하여 확인한다.
+>  Connect and check through the Kubernetes Master IP and the external port of Prometheus.
 
 ![paasta_container_monitoring_prometheus]
 
-## <div id='5'/>5.	Grafana 정보 확인
+## <div id='5'/>5.	Grafana Information Check
 
->  Kubernetes Secret 목록을 확인한다.
+>  Check the Kubernetes Secret list.
  ```
  NAME                                                              TYPE                                  DATA   AGE
  alertmanager-kube-prometheus-stack-1617-alertmanager              Opaque                                1      15h
@@ -502,13 +502,13 @@ $  kubectl config set-context --current --namespace=""
  sh.helm.release.v1.kube-prometheus-stack-1617006674.v1            helm.sh/release.v1                    1      15h
  ```
 
->  Grafana의 Admin 비밀번호를 확인한다.
+>  Check the Admin Password of Grafana.
  ```
 $  kubectl get secret kube-prometheus-stack-1617006674-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
  *************
  ```
 
->  Kubernetes Master IP와 Grafana의 외부 포트를 통해 접속하여 확인한다. 
+>  Connect and check through the external port of Kubernetes Master IP and Grafana.
 
 ![paasta_container_monitoring_grafana]
 
