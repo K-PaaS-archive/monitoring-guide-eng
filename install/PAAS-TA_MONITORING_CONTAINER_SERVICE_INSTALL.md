@@ -21,7 +21,7 @@ This document is based on the installation of Kubespray and CaaS for CaaS deploy
 ## <div id='2'/>2.	CaaS Monitoring Installation
 
 ### <div id='2.1'/>2.1 Prerequisite
-This installation guide is based on installation in the Ubuntu environment. For service installation, BOSH 2.0, PaaS-TA 5.5, PaaS-TA Portal API, PaaS-TA Portal UI, Kubespray Installation, CaaS Deployment must be installaed.
+This installation guide is based on installation in the Ubuntu environment. BOSH 2.0, PaaS-TA 5.5, PaaS-TA Portal API, PaaS-TA Portal UI, Kubespray Installation, and CaaS Deployment must be installed for service installation.
 - [BOSH 2.0 Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/bosh/PAAS-TA_BOSH2_INSTALL_GUIDE_V5.0.md)
 - [PaaS-TA 5.5 Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/paasta/PAAS-TA_CORE_INSTALL_GUIDE_V5.0.md)
 - [PaaS-TA Portal API Installation Guide](https://github.com/PaaS-TA/Guide/blob/master/install-guide/portal/PAAS-TA_PORTAL_API_SERVICE_INSTALL_GUIDE_V1.0.md)
@@ -35,7 +35,7 @@ This installation guide is based on installation in the Ubuntu environment. For 
 #  Helm Download
 $  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 
-#  Helm File Aiuthority Modification
+#  Helm File Authority Modification
 $  chmod 700 get_helm.sh
 
 #  Execute Helm
@@ -96,7 +96,7 @@ $  kubectl create namespace paas-ta-container-monitoring
 $  kubectl get namespace
 ```
 
-> Change Kubernetes default namespace (Set Namespace for paas-ta-contianer-monitoring.)  
+> Change Kubernetes default namespace (Set Namespace for paas-ta-container-monitoring.)  
 ```
 #  Change Kubernetes namespace  
 $  kubectl config set-context --current --namespace=paas-ta-container-monitoring
